@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portal Saúde Digital",
+  title: "Conecta Saúde",
   description: "Plataforma para agendamento de consultas e exames via gov.br",
   icons: {
     icon: "/favicon.svg",

@@ -12,10 +12,10 @@ export default function Home() {
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white">
-            PSD
+            CS
           </div>
           <div>
-            <p className="text-sm font-semibold tracking-wide">Portal Saúde Digital</p>
+            <p className="text-sm font-semibold tracking-wide">Conecta Saúde</p>
             <p className="text-xs text-zinc-600">Acesso aos seus serviços de saúde</p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function Home() {
         <section className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="space-y-6">
             <h1 className="text-4xl font-semibold leading-tight tracking-tight text-zinc-900 sm:text-5xl">
-              Bem-vindo ao Portal Saúde Digital
+              Bem-vindo ao Conecta Saúde
             </h1>
             <p className="max-w-xl text-lg leading-relaxed text-zinc-700">
               Acesse seus serviços de saúde de maneira simples e segura. Agende consultas, confira seus exames
