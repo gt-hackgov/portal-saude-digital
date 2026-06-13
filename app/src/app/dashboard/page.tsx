@@ -133,8 +133,14 @@ export default function DashboardPage() {
           <FeatureCard
             title="Agendar consulta"
             description="Escolha data e horário para sua próxima consulta."
-            onClick={() => handleAction("Agendar consulta")}
+            onClick={() => router.push("/agendar-consulta")}
             icon={<span className="text-lg">🩺</span>}
+          />
+          <FeatureCard
+            title="Consultas agendadas"
+            description="Veja suas consultas marcadas e histórico de agendamentos."
+            onClick={() => router.push("/consultas-agendadas")}
+            icon={<span className="text-lg">📅</span>}
           />
           <FeatureCard
             title="Agendar exame"
