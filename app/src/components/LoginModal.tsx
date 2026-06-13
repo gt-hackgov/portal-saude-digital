@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { findUserByCpf, seedDefaultUsers, setCurrentUser } from "@/lib/userDatabase";
 
 type Props = {
   open: boolean;
@@ -10,10 +11,33 @@ type Props = {
 
 export function LoginModal({ open, onClose }: Props) {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const isValidCpf = (value: string) => {
+    const onlyDigits = value.replace(/\D/g, "");
+    if (!/^[0-9]{11}$/.test(onlyDigits)) return false;
+    if (/^([0-9])\1+$/.test(onlyDigits)) return false;
+
+    const calculateCheckDigit = (digits: string, factor: number) => {
+      const total = digits
+        .split("")
+        .reduce((sum, digit) => sum + Number(digit) * factor--, 0);
+      const remainder = total % 11;
+      return remainder < 2 ? 0 : 11 - remainder;
+    };
+
+    const firstCheck = calculateCheckDigit(onlyDigits.slice(0, 9), 10);
+    const secondCheck = calculateCheckDigit(onlyDigits.slice(0, 10), 11);
+    return firstCheck === Number(onlyDigits[9]) && secondCheck === Number(onlyDigits[10]);
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    seedDefaultUsers();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -39,13 +63,28 @@ export function LoginModal({ open, onClose }: Props) {
     event.preventDefault();
 
     // Placeholder validation. In a real implementation, auth would happen via gov.br.
-    if (!email || !password) {
+    if (!cpf || !password) {
       setError("Por favor, preencha todos os campos.");
       return;
     }
 
-    // Store a mock value to keep user logged in.
-    localStorage.setItem("saudeDigitalUser", JSON.stringify({ email }));
+    if (!isValidCpf(cpf)) {
+      setError("Por favor, insira um CPF válido.");
+      return;
+    }
+
+    const user = findUserByCpf(cpf);
+    if (!user) {
+      setError("CPF não registrado. Por favor, use um CPF válido cadastrado.");
+      return;
+    }
+
+    if (user.password !== password) {
+      setError("Senha incorreta.");
+      return;
+    }
+
+    setCurrentUser({ cpf: user.cpf, username: user.username });
     router.push("/dashboard");
     onClose();
   };
@@ -80,13 +119,13 @@ export function LoginModal({ open, onClose }: Props) {
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
-              CPF ou e-mail gov.br
+              CPF
             </label>
             <input
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              value={cpf}
+              onChange={(event) => setCpf(event.target.value)}
               className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm shadow-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-indigo-400"
-              placeholder="nome@exemplo.gov.br"
+              placeholder="000.000.000-00"
               type="text"
             />
           </div>
