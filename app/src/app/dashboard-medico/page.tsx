@@ -48,6 +48,23 @@ export default function DashboardMedicoPage() {
   };
 
   const maxQuantidade = Math.max(...especialidades.map((e) => e.quantidade));
+  const handleExportarTriagem = () => {
+    const pacientesAltoRisco = consultasHoje.filter((c) => c.risco === "Alto");
+
+    const cabecalho = "Paciente;Horario;Risco";
+    const linhas = pacientesAltoRisco.map(
+      (c) => `${c.paciente};${c.horario};${c.risco}`
+    );
+    const conteudoCsv = [cabecalho, ...linhas].join("\n");
+
+    const blob = new Blob(["\uFEFF" + conteudoCsv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `triagem-acs-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   if (!checkedAuth || !isMedico) {
     return null;
@@ -106,14 +123,25 @@ export default function DashboardMedicoPage() {
           </div>
         </section>
 
-        <section className="mt-8 rounded-3xl bg-white p-8 shadow-lg dark:bg-zinc-950">
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-            Consultas de hoje
-          </h2>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-            Risco de falta calculado por modelo de IA (dados de exemplo — modelo real é uma
-            evolução futura do projeto)
-          </p>
+                <section className="mt-8 rounded-3xl bg-white p-8 shadow-lg dark:bg-zinc-950">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                Consultas de hoje
+              </h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                Risco de falta calculado por modelo de IA (dados de exemplo — modelo real é uma
+                evolução futura do projeto)
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleExportarTriagem}
+              className="whitespace-nowrap rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+            >
+              Exportar lista de triagem (CSV)
+            </button>
+          </div>
 
           <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800">
             {consultasHoje.map((consulta) => (
