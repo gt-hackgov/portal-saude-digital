@@ -4,21 +4,26 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { ChatModal } from "@/components/ChatModal";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [userName] = useState<string | null>(() => {
-    if (typeof window === "undefined") return null;
-    const raw = localStorage.getItem("saudeDigitalUser");
-    if (!raw) return null;
+      const [userName, setUserName] = useState<string | null>(null);
+  const [checkedAuth, setCheckedAuth] = useState(false);
 
-    try {
-      const user = JSON.parse(raw);
-      return user.username ?? "Usuário";
-    } catch {
-      return null;
+  useEffect(() => {
+    const raw = localStorage.getItem("saudeDigitalUser");
+    if (raw) {
+      try {
+        const user = JSON.parse(raw);
+        setUserName(user.username ?? "Usuário");
+      } catch {
+        setUserName(null);
+      }
     }
-  });
+    setCheckedAuth(true);
+  }, []);
+    
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [notificationModalOpen, setNotificationModalOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -29,11 +34,11 @@ export default function DashboardPage() {
     return userName.split("@")[0];
   }, [userName]);
 
-  useEffect(() => {
-    if (!userName) {
+    useEffect(() => {
+    if (checkedAuth && !userName) {
       router.replace("/");
     }
-  }, [router, userName]);
+  }, [checkedAuth, userName, router]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -62,7 +67,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-indigo-50 to-white px-6 py-10">
+    <div className="min-h-screen bg-gradient-to-b from-white via-indigo-50 to-white px-6 py-10 dark:bg-none dark:bg-zinc-900">
       <div className="mx-auto w-full max-w-6xl">
         <header className="relative flex flex-col gap-6 rounded-3xl bg-white p-8 shadow-lg dark:bg-zinc-950">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -75,6 +80,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
