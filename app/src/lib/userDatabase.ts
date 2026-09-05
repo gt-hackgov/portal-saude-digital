@@ -7,6 +7,7 @@ export type UserRecord = {
 export type CurrentUser = {
   cpf: string;
   username: string;
+  role: "paciente" | "medico";
 };
 
 const STORAGE_USERS_KEY = "saudeDigitalUsers";
