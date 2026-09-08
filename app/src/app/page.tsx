@@ -8,7 +8,7 @@ export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
 
   return (
-        <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 via-white to-indigo-50 text-zinc-900 dark:bg-none dark:bg-zinc-900 dark:text-zinc-50">
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 via-white to-indigo-50 text-zinc-900">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white">
