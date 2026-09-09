@@ -140,31 +140,69 @@ export default function DashboardPage() {
             title="Agendar consulta"
             description="Escolha data e horário para sua próxima consulta."
             onClick={() => router.push("/agendar-consulta")}
-            icon={<span className="text-lg">🩺</span>}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 3v6a3 3 0 0 0 6 0V3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                <path d="M17 3v4.5a5 5 0 0 1-10 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                <circle cx="18.5" cy="14.5" r="2.5" stroke="currentColor" strokeWidth="1.6"/>
+                <path d="M13 12.5v2A5.5 5.5 0 0 0 16.2 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+            }
           />
           <FeatureCard
             title="Consultas agendadas"
             description="Veja suas consultas marcadas e histórico de agendamentos."
             onClick={() => router.push("/consultas-agendadas")}
-            icon={<span className="text-lg">📅</span>}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6"/>
+                <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+            }
           />
           <FeatureCard
             title="Agendar exame"
             description="Escolha o tipo de exame e o local de coleta."
             onClick={() => handleAction("Agendar exame")}
-            icon={<span className="text-lg">🧪</span>}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+              </svg>
+            }
           />
           <FeatureCard
             title="Resultado de exames"
             description="Veja os resultados dos exames já realizados."
-            onClick={() => handleAction("Resultado de exames")}
-            icon={<span className="text-lg">📄</span>}
+            onClick={() => router.push("/resultado-exames")}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 3h7l4 4v14H7z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.6"/>
+                <path d="M9 12h6M9 16h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+            }
           />
           <FeatureCard
             title="Procurar UBS mais próxima"
             description="Encontre a unidade básica de saúde mais próxima de você."
-            onClick={() => handleAction("Procurar UBS mais próxima")}
-            icon={<span className="text-lg">📍</span>}
+            onClick={() => router.push("/buscar-ubs")}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.6"/>
+              </svg>
+            }
+          />
+          <FeatureCard
+            title="Histórico de vacinas"
+            description="Consulte suas doses aplicadas e as próximas previstas."
+            onClick={() => router.push("/historico-vacinas")}
+            icon={
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
           />
         </section>
       </div>
